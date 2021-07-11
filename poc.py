@@ -53,6 +53,7 @@ with requests.Session() as session:
     })
 
     def jsonRequest(method, params={}):
+        #if cannot connect - requests.exceptions.ConnectionError
         resultObj = session.post(config["url"]+"/jrd/webapi", json={
             "id":"12",
             "jsonrpc":"2.0",
@@ -81,11 +82,12 @@ with requests.Session() as session:
     cells = ("NetworkName",
             "CellId",
             "RSSI",
+            "RSRQ",
             "SINR",
             "RSRP",
             "LTE_state",
             "Band")
-    rowFormat = "{:<15} {:<15} {:<5} {:<5} {:<5} {:<10} {:<3}"
+    rowFormat = "{:<15} {:<15} {:<5} {:<5} {:<5} {:<5} {:<10} {:<3}"
     print(rowFormat.format(*cells))
     while True:
         dataFeed = jsonRequest("GetNetworkInfo")
